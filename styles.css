@@ -11,7 +11,7 @@
   left: 0;
   color: #212121;
 }
-#board {
+.board {
   font-family: monospace;
   background-color: rgba(156, 83, 6, 0.75);
   width: 100%;
@@ -20,6 +20,11 @@
   margin: 0;
   padding: 0;
   position: relative;
+}
+
+.hide{
+
+  display: none;
 }
 
 .post-it {

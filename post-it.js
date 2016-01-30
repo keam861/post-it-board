@@ -2,16 +2,13 @@ $(function() {
   // Esta es la función que correrá cuando este listo el DOM 
   count = 0; 
   $("#new-board-btn").click(function() {
-    mini_board = new Board('#board' + count);
+    mini_board = new Board('board' + count);
     count += 1;
-  });
-  $("#new-board-btn").on("click", "#board", function() {
-    new PostIt();
-    // var newPost = new PostIt();
-    // mini_board.array.push(newPost);
-    // $("#board").append(newPost);
+  }); 
 
-    // console.log(mini_board);
+  $("#container").on("click",".board", function() {
+     $board = $(this)
+     new PostIt($board);
   });
 
 });
@@ -25,11 +22,12 @@ var Board = function( selector ) {
   console.log(this);
   // Utiliza esta sintaxis para referirte al selector que representa al tablero.
   // De esta manera no dependerás tanto de tu HTML.  
-  $board = $( selector );
+  // $board = $( selector );
 
   function initialize() {
     // Que debe de pasar cuando se crea un nuevo tablero?
     createBoard();
+    // addsListener();
     
     // $("a.boardLink").on("click", toggleBoard);
     
@@ -38,6 +36,7 @@ var Board = function( selector ) {
   function createBoard(){
     // $(".post-it").remove();
     var board_name = prompt("Please name your new board", "");
+    $("#container").append("<div class='board' id="+ selector + "></div>");
     $("#board-list").append("<li> <a href='#' class='boardLink'>"+board_name+"</a></li>");
     $(".boardLink").click(function() {
       console.log("hola");
@@ -50,12 +49,19 @@ var Board = function( selector ) {
 
   }
 
+  // function addsListener(){
+  //   $("#" + selector).on("click", function() {
+  //      new PostIt($("#" + selector));
+  //   });
+  // }
+
+
   initialize();
 };
 
-var PostIt = function() {
+var PostIt = function(board) {
   // Aquí va el código relacionado con un post-it 
-  $($board).append("<div id='"+id+"' class='post-it'><div class='header'><a href='#' class='close'>X</a></div><div contenteditable='true' class='content'>"+id+"</div></div>");
+  board.append("<div id='"+id+"' class='post-it'><div class='header'><a href='#' class='close'>X</a></div><div contenteditable='true' class='content'>"+id+"</div></div>");
   $(".content").on("click", stopPostIt);
   $(".post-it").draggable({handle: ".header"});
   $("a.close").on("click", deletePostIt);
