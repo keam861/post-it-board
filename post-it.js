@@ -4,12 +4,22 @@ $(function() {
   $("#new-board-btn").click(function() {
     mini_board = new Board('board' + count);
     count += 1;
-  }); 
+    $("a.boardLink").click(function() {
+      var boardClass = $(this).text();
+      // $(".").hide();
+      console.log(boardClass);
+      var str = "."+boardClass;
 
-  $("#container").on("click",".board", function() {
-     $board = $(this)
-     new PostIt($board);
-  });
+      $(".board:not("+str+")").hide();
+      $(str).show();
+    });
+  }); 
+  
+
+  // $("#container").on("click",".board", function() {
+  //    $board = $(this)
+  //    new PostIt($board);
+  // });
 
 });
 
@@ -27,7 +37,7 @@ var Board = function( selector ) {
   function initialize() {
     // Que debe de pasar cuando se crea un nuevo tablero?
     createBoard();
-    // addsListener();
+    addsListener();
     
     // $("a.boardLink").on("click", toggleBoard);
     
@@ -36,7 +46,8 @@ var Board = function( selector ) {
   function createBoard(){
     // $(".post-it").remove();
     var board_name = prompt("Please name your new board", "");
-    $("#container").append("<div class='board' id="+ selector + "></div>");
+    // $("#container").append("<div class='board' id="+ selector + "></div>");
+    $("#container").append("<div class='board "+ board_name +"' id="+ selector +"></div>");
     $("#board-list").append("<li> <a href='#' class='boardLink'>"+board_name+"</a></li>");
     $(".boardLink").click(function() {
       console.log("hola");
@@ -49,11 +60,11 @@ var Board = function( selector ) {
 
   }
 
-  // function addsListener(){
-  //   $("#" + selector).on("click", function() {
-  //      new PostIt($("#" + selector));
-  //   });
-  // }
+  function addsListener(){
+    $("#" + selector).on("click", function() {
+       new PostIt($("#" + selector));
+    });
+  }
 
 
   initialize();
